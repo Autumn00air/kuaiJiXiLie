@@ -1,0 +1,195 @@
+类和继承
+
+类实现
+function A(name){
+    this.name = name
+    this.getName = function(){
+        return this.name
+    }
+}
+A.prototype.getName = function(){
+    return this.name.toUpperCase()
+}
+const a = new A("xiaoming")
+A.getName()
+其实属性这里如果要用getter/setter可以用Object.defineProperty()来实现
+                                     es6以前
+---------------------------------------------   
+                                     es6以后
+class A(){
+    constructor(name){
+        this.name = name
+    }
+    getName(){
+        return this.name
+    }
+    get myname(){
+        return this.myname
+    }
+    set myname(name){
+        this.name = name
+    }
+}
+class xiaoming = new A("xiaoming")
+xiaoming.getName()
+xiaoming.myname = "huazi"
+console.log(xiaoming.myname)
+
+----------------
+一些其他的东西
+delete xiaoming.name 可以删除实例的属性
+
+A.name 本来就存着构造函数的名字，而且只读
+A.myname = "xiaohua"
+console.log(A.myname)
+A.getWhat = function(what) {
+    return what+"!!!"
+}
+A.getWhat("gogogo")
+可以定义静态属性和静态方法，而且这些是挂在构造函数上的,也只能构造函数调用
+注意静态方法中不应该出现this，这个this会指向构造函数,只能找到静态属性，找不到
+原型的,也找不到构造函数this.name定义的，因为这是实例之后才有的
+
+for (let key in ss) {
+    if (ss.hasOwnProperty(key)) {
+        console.log(key)
+    }
+    // console.log(key)
+}
+for in 可以遍历ss所有的属性和函数，包括原型链以上的所有
+而hasOwnProperty只返回自己实例的
+in也可以判断属性是否是某个实例的
+
+构造函数的继承关系可以更改，但是原型链式生成实例的时候就固定了，你再去改
+父类的原型，这个时候子类是找不到的这个原型中新定义的属性和方法的,好吧
+还是有用的，可以对这个父类原型修改属性，但是不能重新new一个出来，new完之后
+以前的还是不会改变的，引用是不会变得
+
+判断继承的父类的方法，以及这几个东西指向你会吗
+function father() {
+
+}
+function son() {
+    father.call(this)
+}
+son.prototype = new father()
+var son1 = new son()
+console.log(son1.prototype)   //没有这个东西
+console.log(son1.constructor) //father这个构造函数
+console.log(son1.__proto__)   //father的一个实例
+console.log(son1 instanceof son)       //true
+console.log(son1 instanceof father)    //true
+console.log(son.prototype.isPrototypeOf(son1))       //true
+console.log(father.prototype.isPrototypeOf(son1))    //true
+
+私有属性
+function father(id) {
+        this._id = id
+    }
+    const wo = new father(22)
+    console.log(wo._id)
+    这种没用的，防君子不防小人
+function father(id) {
+        var _id = id
+        this.getId = function () {
+            return _id
+        }
+    }
+    const wo = new father(18)
+    console.log(wo._id)
+    console.log(wo.getId())
+闭包这种才有用,私有方法也一样,而且这个函数调用了之后，其他除了this的属性之外的变量会销毁
+但是有被引用到的变量是会作为闭包保存下来的    
+------------------es6以前
+静态方法
+class Father{
+    constructor(id){
+        this.id = id
+    }
+    static sayhello(){
+        console.log("hello")
+    }
+}
+
+
+
+
+
+
+
+
+继承
+
+function father(id) {
+    this.id = id
+}
+father.prototype.getId = function () {
+    console.log(this.id)
+}
+function son(id, name) {
+    father.call(this, id)
+    this.name = name
+}
+son.prototype = new father()
+son.prototype.getName = function () {
+    console.log(this.name)
+}
+var ss = new son(18, "xiaoming")
+ss.getName()
+ss.getId()
+-----------------------------
+class Father {
+    constructor(id) {
+        this.id = id
+    }
+    getId() {
+        console.log(this.id)
+    }
+    static sayHello() {
+        console.log("hello")
+    }
+}
+class Son extends Father {
+    constructor(id, name) {
+        super(id, name)
+        this.name = name
+    }
+    getName() {
+        console.log(this.name)
+    }
+    getMes() {
+        super.getId()
+        this.getName()
+    }
+}
+Son.sayHello()
+var myson = new Son(10086, "hallo")
+console.log(myson)
+myson.getId()
+myson.getMes()
+私有属性可以用模块加symbol的方式来实现
+也可以用闭包的形式完成
+这是class形式的私有属性，用闭包完成的
+打印是可以打印ss的，但是不能访问到#myId,这个#也是有点作用的
+因为这里面不能写var a = 2这种，如果写a=2，相当于this.a=2了
+加了#，就相当于函数中的var a = 2，另外这里set 和 get是绑在
+原型上的，myId也是，而#myId是在实例中的
+class Father {
+    #myId = 1
+    b = 5
+    constructor(id) {
+        this.id = id
+    }
+    set myId(a) {
+        this.#myId = a
+    }
+    get myId() {
+        return this.#myId
+    }
+}
+var ss = new Father(5)
+ss.myId = 7
+// console.log(ss.#id)
+console.log(ss.myId)
+console.log(ss)
+console.log(ss.b)

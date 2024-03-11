@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        //冒泡排序
+        // function bubblesort(arr) {
+        //     if (arr.length < 2) {
+        //         return
+        //     }
+        //     for (let i = 0; i < arr.length; i++) {
+        //         for (let j = 0; j < arr.length - i - 1; j++) {
+        //             if (arr[j] > arr[j + 1]) {
+        //                 [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+        //             }
+        //         }
+        //     }
+        //     return
+        // }
+        // // let arr = [1, 2, 3, 6, 7, 9]
+        // let arr = [1]
+        // bubblesort(arr)
+        // console.log(arr)
+
+        //选择排序
+        // function selectsort(arr) {
+        //     if (arr.length < 2) {
+        //         return arr
+        //     }
+        //     for (let i = 0; i < arr.length; i++) {
+        //         let target = i
+        //         for (let j = i + 1; j < arr.length; j++) {
+        //             if (arr[j] < arr[target]) {
+        //                 target = j
+        //             }
+        //         }
+        //         if (target !== i) {
+        //             [arr[i], arr[target]] = [arr[target], arr[i]]
+        //         }
+        //     }
+        //     return
+        // }
+        // let arr = [1, 2, 4, 6, 3, 2, 7, 8]
+        // selectsort(arr)
+        // console.log(arr)
+
+        //插入排序
+        // function insertsort(arr) {
+        //     if (arr.length < 2) {
+        //         return arr
+        //     }
+        //     for (let i = 1; i < arr.length; i++) {
+        //         let current = arr[i]
+        //         for (let j = i - 1; j > 0; j--) {
+        //             if (arr[j] > current) {
+        //                 arr[j + 1] = arr[j]
+        //             } else {
+        //                 arr[j + 1] = current
+        //                 break
+        //             }
+        //         }
+        //     }
+        // }
+        // let arr = [1, 2, 4, 6, 3, 2, 7, 8]
+        // insertsort(arr)
+        // console.log(arr)
+
+        // //递归排序  归并排序
+        // function mergesort(arr) {
+        //     if (arr.length < 2) {
+        //         return arr
+        //     }
+        //     let mid = Math.floor(arr.length / 2)
+        //     let left = arr.slice(0, mid)
+        //     let right = arr.slice(mid, arr.length)
+        //     let newleft = mergesort(left)
+        //     let newright = mergesort(right)
+        //     arr = merge(newleft, newright)
+        //     return arr
+        // }
+        // function merge(left, right) {
+        //     let ans = []
+        //     let l = 0, r = 0
+        //     while (l < left.length && r < right.length) {
+        //         if (left[l] < right[r]) {
+        //             ans.push(left[l])
+        //             l++
+        //         } else {
+        //             ans.push(right[r])
+        //             r++
+        //         }
+        //     }
+        //     //注意不能这么写，因为concat是返回一个新数组，原数组ans是不会改变的
+        //     // ans.concat(l == left.length ? right.slice(r, right.length) : left.slice(l, left.length))
+        //     // return ans
+        //     return ans.concat(l == left.length ? right.slice(r, right.length) : left.slice(l, left.length))
+
+        // }
+
+        // let arr = [1, 4, 7, 2, 5, 7, 5, 9, 0]
+        // console.log(mergesort(arr))
+
+        // 快速排序
+        function quicksort(arr) {
+            //注意拼写
+            // if (arr.lenght < 2) {
+            if (arr.length < 2) {
+                return arr
+            }
+            let res = []
+            let current = arr[0]
+            let left = arr.slice(1).filter((item) => item < current)
+            let right = arr.slice(1).filter((item) => item >= current)
+            let newleft = quicksort(left)
+            let newright = quicksort(right)
+            res = newleft.concat(current).concat(newright)
+            return res
+        }
+        // let arr = [1, 4, 7, 2, 5, 7, 5, 9, 0]
+        // // let current = arr[0]
+        // // console.log(arr.filter((item) => item > 2))
+        // // console.log(arr.slice(1))
+        // // console.log(arr.slice(1).filter((item) => item <= current))
+        // console.log(quicksort(arr))
+
+        //顺序搜索
+        // function ordersearch(arr, ele) {
+        //     for (let i = 0; i < arr.length; i++) {
+        //         if (arr[i] === ele) {
+        //             return i
+        //         }
+        //     }
+        //     return -1
+        // }
+        // let arr = [1, 4, 7, 2, 5, 7, 5, 9, 0]
+        // console.log(ordersearch(arr, 5))
+
+        // function binarysearch(arr, item) {
+        //     arr = quicksort(arr)
+        //     if (item < arr[0] || item > arr[arr.length - 1]) {
+        //         return -1
+        //     }
+        //     let left = 0, right = arr.length - 1
+        //     while (left <= right) {
+        //         let mid = Math.floor((left + right) / 2)
+        //         if (item === arr[mid]) {
+        //             return mid
+        //         } else if (item < arr[mid]) {
+        //             right = mid
+        //         } else {
+        //             left = mid + 1
+        //         }
+        //     }       //-1  // 0  1  // 3   0   1
+        //     return -1
+        // }
+        // //二分的思路不难，难的是边界的确定，有两点注意，一个是while的判断必须要<=，第二个是left的移动必须要mid+1
+        // //为什么呢，前者是为了能够寻找最后一个的时候找到，后者是为了防止死循环，其实测两种极端就知道了
+        // //比如最后两个元素是[4,5]，要找的数字分别在这个区间之前，之后，中间，来思考边界应该如何写来跳出循环
+        // //还有如果刚开始，要找的值是数组的头尾两个数值怎么找，怎么确保，能够被找到
+        // let arr = [1, 4, 7, 2, 5, 7, 5, 9, 0]
+        // //排完序之后应该是[0,1,2,4,5,5,7,7,9]
+        // console.log(binarysearch(arr, 0))
+
+        //内插搜索
+        //先写二分在改一句话就可以了，另外注意math.floor包的是谁，要是包的是小于一的分数就永远为0了
+        //还要注意的是Live server打开的浏览器页面如果在你程序有死循环的时候，会有可能不报错，也没有后续结果的
+        // function insertsearch(arr, item) {
+        //     arr = quicksort(arr)
+        //     if (item < arr[0] || item > arr[arr.length - 1]) {
+        //         return -1
+        //     }
+        //     let left = 0, right = arr.length - 1
+        //     while (left <= right) {
+        //         // let mid = Math.floor((left + right) / 2)和二分搜索的区别就是中间的这个取值
+        //         let mid = left + Math.floor((item - arr[left]) / (arr[right] - arr[left]) * (right - left))
+        //         if (item === arr[mid]) {
+        //             return mid
+        //         } else if (item < arr[mid]) {
+        //             right = mid
+        //         } else {
+        //             left = mid + 1
+        //         }
+        //     }       //-1  // 0  1  // 3   0   1
+        //     return -1
+        // }
+        // let arr = [1, 4, 7, 2, 5, 7, 5, 9, 0]
+        // //排完序之后应该是[0,1,2,4,5,5,7,7,9]
+        // console.log(insertsearch(arr, 4)) 
+    </script>
+</body>
+
+</html>

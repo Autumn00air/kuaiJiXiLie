@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // function fn1() {
+        //     console.log(this)
+        // }
+        // fn1()
+        // //function定义的函数是谁调用我，（哪个对象），我指向谁
+        // const obj = {
+        //     fn2() {
+        //         fn1()                   //指向window，因为并没有一个直接的对象来obj.fn1()去调用它
+        //         console.log(this)      //指向的是这个obj 
+        //     },                       //this始终是跟函数有关的，所以构造函数中才会this.data能搞到实例的属性
+        //     fn3() {
+        //         return fn1
+        //     }
+        // }
+        // obj.fn2()
+        // obj.fn3()()      //指向window，因为并没有一个直接的对象来obj.fn1()去调用它
+
+
+        //解决匿名函数的this指向的很简单的一个问题是找定义它的时候的保住它的函数a的this指向，如果这个函数a是一个对像调用的，那么this也指向这个函数的this，指向对用他的对象；如果是在全局调用的，一般情况下就是指向window啦，其实就是window调用了
+        //我在哪定义的，我指向那个函数的this
+        //有个判辩思路是，想下定义这个匿名函数的同一代码层，也就是同一个函数里，在这个匿名函数的上一层打印一个console.log(this)，会指向谁，这个就是this的指向
+        const fn1 = () => {
+            console.log(this)
+        }
+        // fn1() //指向window
+        const obj = {
+            fn2: () => {
+                fn1()                 //指向window，因为fn1()在定义的时候已经指向window了
+                // console.log(this)     指向window，因为这个匿名函数之外并没有一个函数来包裹它，或者说，这个匿名函数的同层打印个this就是window
+            },
+            fn3() {
+                console.log(this)  //指向这个obj不用说的
+                return () => {
+                    // console.log(this)   指向定义它的保住它的同函数的this，保住它的函数的this就是上面这个console.log中的this,也就是又指向了这个obj啦
+                }
+            }
+        }
+        // obj.fn2()
+        // obj.fn3()()
+        function fn4() {
+            return () => {
+                console.log(this)
+            }
+        }
+        fn4()()
+    </script>
+</body>
+
+</html>

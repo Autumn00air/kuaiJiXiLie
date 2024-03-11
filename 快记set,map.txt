@@ -1,0 +1,23 @@
+Set 集合
+new Set()
+size
+set(key,val)
+get(key)
+has(key)
+delete(key)
+clear()
+keys()             迭代器？
+values()
+entries()
+forEach(func,that)  第一个为接受key,val的回调函数，第二个为可添加的这个会滴函数的this指向
+---------------------------
+Map 哈希表
+new Map()
+size()
+add(val)
+has(val)
+delete(val)
+clear()
+entries()
+values()
+forEach(func,that)    

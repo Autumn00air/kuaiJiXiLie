@@ -1,0 +1,109 @@
+//迭代器
+let a = [2, 3, 4]
+var itr = a[Symbol.iterator]()
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+// console.log(itr.next())
+// console.log(a[Symbol.iterator]())
+for (let item of a) {
+    console.log(item)
+}
+可迭代对象Array，string，Map，Set都会有一个
+Symbol.iterator属性，这个属性的值是一个函数
+这个函数返回一个迭代器，也就是（iterator对象）
+这个迭代器有个next方法，返回一个包含{done,value}的对象
+for of 遍历的其实就是这个迭代器
+
+//自定义对象创建迭代器的方法
+//记住那句话，对象有个Symbol.iterator属性，是个函数，返回一个对象，这个对象里有个next方法
+class myway {
+    constructor(data) {
+        this.data = data
+    }
+    [Symbol.iterator]() {
+        let current = 0
+        let that = this
+        return {
+            next() {
+                return current < that.data.length ?
+                    {
+                        value: that.data[current++],
+                        done: false
+                    } :
+                    {
+                        done: true
+                    }
+            }
+        }
+    }
+}
+var a = new myway([1, 2, 3])
+// console.log(a)
+for (let item of a) {
+    console.log(item)
+}
+var itr = a[Symbol.iterator]()
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+
+//生成器完成迭代器的做法
+//生成器函数定义之后，调用之后会生成一个迭代器，所以也可以
+//通过调用next方法或者for of方法
+function* gen() {
+    yield "a"
+    yield "b"
+    yield "c"
+    yield "d"
+}
+// console.log(gen)
+var itr = gen()
+console.log(itr)
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+
+for (let i of gen()) {
+    console.log(i)
+}
+
+//生成器改写类
+class myway {
+    constructor(data) {
+        this.data = data
+    }
+    [Symbol.iterator] = function* () {
+        let current = 0
+        while (current < this.data.length) {
+            yield this.data[current++]
+        }
+    }
+}
+const a = new myway([1, 2, 3])
+var itr = a[Symbol.iterator]()
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+console.log(itr.next())
+
+//代理  新增的Proxy对象
+let s = {
+    name: "sz",
+    id: 1
+}
+var proxy = new Proxy(s, {
+    get(target, prop) {
+        return target[prop] + "走的代理"
+    }
+})
+console.log(s.name)
+console.log(s.id)
+console.log(proxy.name)
+console.log(proxy.id)
+
+//代理和反射的理解这里还差一点,没有理解完代理的所有捕获(陷阱)，以及
+//反射的理解还没上

@@ -1,0 +1,23 @@
+字符串
+indexof    
+lastindexof         返回位置
+---------------------------
+startswith           返回布尔
+endswith
+includes
+
+charat                   查找字符位置
+slice                      切片
+substring             同上子字符串，只是不能处理负参数罢了 
+substr                   切几个字符
+split                       分割成数组
+
+-----------------------------------
+match                  返回字符串               正则
+replace                替代
+search                  返回位置
+
+concat               可以链式组合 
+repeat               返回重复多少次的数组
+trim                   返回删除前后字符串的数组
+length

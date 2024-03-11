@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // const A = function (name, id) {
+        //     // 注意不能用箭头函数，不然就没有this了
+        //     this.name = name
+        //     this.id = id
+        //     this.myclg = function () {
+        //         console.log(this.name, this.id)
+        //         console.log(this)
+        //     }
+        // }
+        // A.prototype.getId = (that) => {
+        // this = that
+        //注意这里不能用箭头函数，因为这是外面，所以按照箭头函数的定义时候我在哪个function的括号内，我的this指向谁，
+        //也不能用call，因为箭头函数是没有call的，不能改变，定义的时候就已经确定了，而上面是可以用箭头函数的，因为他的this到时候会和函数的this一致，而函数function的this会是
+        //调用他的xiaoming
+        // A.prototype.getId = function () {
+        //     console.log(this.id)
+        //     console.log(this)
+        // }
+        // const xiaoming = new A("xiaoming", 18)
+        // // xiaoming.myclg()
+        // // A.prototype.getId.call(xiaoming)
+        // xiaoming.getId()
+        // const huazi = new A("huazi", 80)
+        // // huazi.myclg()
+        // huazi.getId()
+
+        // A.
+
+
+        // class A {
+        //     constructor(name) {
+        //         this.name = name
+        //     }
+        //     getName() {
+        //         console.log(this.name)
+        //     }
+        //     //设置器和获取器  getter/setter
+        //     set myname(name) {
+        //         this.name = name
+        //     }
+        //     get myname() {
+        //         return this.name
+        //     }
+        // }
+        // const xiaoming = new A("xiaoming")
+        // xiaoming.getName()
+        // xiaoming.myname = "huazi"
+        // console.log(xiaoming.myname)
+
+        //删除实例或者原型上的属性
+        // function A() {
+        //     this.name = "xiaoming"
+        // }
+        // const xiaoming = new A()
+        // const huazi = new A()
+        // delete xiaoming.name
+        // console.log(huazi)
+        // A.prototype.id = 18
+        // console.log(xiaoming.id)
+        // delete A.prototype.id
+        // console.log(xiaoming.id)
+
+        //实例的__proto__指向构造函数的原型
+        // function A() {
+
+        // }
+        // const xiaoming = new A()
+        // console.log(xiaoming.__proto__)
+        // console.log(xiaoming)
+        // console.log(A)
+        // console.log(A.prototype)
+
+        //静态方法、静态属性
+        // function A() {
+        // var Area = function () {
+        // }
+        // Area.version = "huazi";
+        // Area.triangle = function (base, height) {
+        //     return base * height / 2;
+        // };
+        // console.log(Area.version);
+        // console.log(Area.triangle(12, 3));
+        // var A = function () {
+        //     // this.myname = "lihua"
+        // }
+        // //静态属性的name其实就是函数名字,而且静态属性原则上只读
+        // // A.name = "huazi"
+        // // console.log(A.name)
+        // A.myname = "huazi"
+        // A.getmyname = function () {
+        //     // return this.myname
+        //     //this指向的是构造函数
+        //     // return A.myname
+        //     return this.myname
+        // }
+        // console.log(A.getmyname())
+
+        //继承
+        // function A(name) {
+        //     this.name = name
+        // }
+        // A.prototype.getName = function () {
+        //     return this.name
+        // }
+
+        // function B(name, id) {
+        //     A.call(this, name)
+        //     this.id = id
+        // }
+        // B.prototype = new A()
+        // //原型链式是动态绑定的，错错错！！！
+        // // A.prototype.getId = function () {
+        // //     return this.id
+        // // }
+        // B.prototype.getId = function () {
+        //     return this.id
+        // }
+        // const xiaoming = new B("xiaoming", 18)
+        // console.log(xiaoming.id)
+        // console.log(xiaoming.name)
+        // console.log(xiaoming.getId())
+        // console.log(xiaoming.getName())
+
+
+        // function father(id) {
+        //     this.id = id
+        // }
+        // father.prototype.getId = function () {
+        //     console.log(this.id)
+        // }
+        // function son(id, name) {
+        //     father.call(this, id)
+        //     this.name = name
+        // }
+        // son.prototype = new father()
+        // son.prototype.getName = function () {
+        //     console.log(this.name)
+        // }
+        // var ss = new son(18, "xiaoming")
+        // ss.getName()
+        // ss.getId()
+        // for (let key in ss) {
+        //     if (ss.hasOwnProperty(key)) {
+        //         console.log(key)
+        //     }
+        //     // console.log(key)
+        // }
+        //没用了，原型链在实例生成就固定了
+        // father.prototype.getwhat = function () {
+        //     console.log("what")
+        // }
+        // function father2() {
+
+        // }
+        // father2.prototype.getwhat = function () {
+        //     console.log("father2what")
+        // }
+        // son.prototype = new father2()
+        // ss.getwhat()
+        // var yy = new son()
+        // yy.getwhat()
+
+        // function father() {
+
+        // }
+        // function son() {
+        //     father.call(this)
+        // }
+        // son.prototype = new father()
+        // var son1 = new son()
+        // console.log(son1.prototype)
+        // console.log(son1.constructor)
+        // console.log(son1.__proto__)
+        // console.log(son1 instanceof son)
+        // console.log(son1 instanceof father)
+        // console.log(son.prototype.isPrototypeOf(son1))
+        // console.log(father.prototype.isPrototypeOf(son1))
+
+        //静态属性和静态方法
+        //第一个没用，第二个用了闭包才有用你
+        // function father(id) {
+        //     this._id = id
+        // }
+        // const wo = new father(22)
+        // console.log(wo._id)
+        // function father(id) {
+        //     var _id = id
+        //     this.getId = function () {
+        //         return _id
+        //     }
+        // }
+        // const wo = new father(18)
+        // console.log(wo._id)
+        // console.log(wo.getId())
+        // class father {
+
+        //     constructor(id) {
+        //         this.id = id
+        //     }
+        // }
+        // var son = new father()
+        // son.ss = "2"
+        // console.log(son)
+
+        // class Father {
+        //     constructor(id) {
+        //         this.id = id
+        //     }
+        //     static sayHello() {
+        //         console.log("hello")
+        //     }
+        // }
+        // Father.sayHello()
+        // var son = new Father()
+        // son.sayHello()
+
+        // class Father {
+        //     constructor(id) {
+        //         this.id = id
+        //     }
+        //     getId() {
+        //         console.log(this.id)
+        //     }
+        //     static sayHello() {
+        //         console.log("hello")
+        //     }
+        // }
+        // class Son extends Father {
+        //     constructor(id, name) {
+        //         super(id, name)
+        //         this.name = name
+        //     }
+        //     getName() {
+        //         console.log(this.name)
+        //     }
+        //     getMes() {
+        //         super.getId()
+        //         this.getName()
+        //     }
+        // }
+        // Son.sayHello()
+        // var myson = new Son(10086, "hallo")
+        // console.log(myson)
+        // myson.getId()
+        // myson.getMes()
+
+        class Father {
+            #myId = 1
+            b = 5
+            constructor(id) {
+                this.id = id
+            }
+            set myId(a) {
+                this.#myId = a
+            }
+            get myId() {
+                return this.#myId
+            }
+        }
+        var ss = new Father(5)
+        ss.myId = 7
+        // console.log(ss.#id)
+        console.log(ss.myId)
+        console.log(ss)
+        console.log(ss.b)
+    </script>
+</body>
+
+</html>
